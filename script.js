@@ -57,7 +57,7 @@ const Dashboard = `
           <!-- Recent Expenses Section -->
           <div class="grid gap-4 md:grid-cols-2">
             <div
-              class="rounded-lg border bg-white text-card-foreground shadow-sm py-10 px-12"
+              class="rounded-lg border bg-white text-card-foreground shadow-sm lg:py-10 lg:px-12 p-6"
             >
               <div class="card-header">
                 <span class="text-2xl font-semibold leading-none tracking-tight">Recent Expenses</span>
@@ -73,7 +73,7 @@ const Dashboard = `
 
             <!-- Add New Expense Form -->
             <div
-              class="rounded-lg border bg-white text-card-foreground shadow-sm py-10 px-12"
+              class="rounded-lg border bg-white text-card-foreground shadow-sm lg:py-10 lg:px-12 p-6"
             >
               <div class="card-header">
                 <span class="text-2xl font-semibold leading-none tracking-tight">Add New Expense</span>
@@ -110,7 +110,7 @@ const Dashboard = `
 
 const BudgetSettings = `
           <div
-          class="rounded-lg border bg-white shadow-sm py-10 px-12 w-2/3 m-auto my-5 "
+          class="rounded-lg border bg-white shadow-sm lg:py-10 lg:px-12 px-8 py-6 lg:w-2/3 w-full m-auto my-5  "
         >
           <div class="card-header">
             <span class="text-2xl font-semibold leading-none tracking-tight">Budget Settings</span>
@@ -129,7 +129,7 @@ const BudgetSettings = `
               </div>
        `;
 const Expenses = `<div
-            class="rounded-lg border bg-white shadow-sm py-10 px-12 w-3/4 m-auto my-5 h-[90%] "
+            class="rounded-lg border bg-white shadow-sm lg:py-10 py-6 lg:px-12 px-4 lg:w-3/4 w-full m-auto lg:my-5 lg:h-[90%] h-[86dvh] overflow-hidden "
           >
             <div class="header mb-3">
               <span class="text-2xl font-semibold leading-none tracking-tight"
@@ -142,6 +142,25 @@ const Expenses = `<div
           </div>`;
 
 // Navigaion
+let hamburger = document.getElementsByClassName("outline-button-icon")[0];
+let sidebar= document.getElementsByTagName("aside")[0];
+let toggleSidebar = ()=>{
+  if(hamburger.classList.contains("closed")){
+    hamburger.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`
+    hamburger.classList.remove("closed");
+    hamburger.classList.add("opened");
+    sidebar.classList.remove("left-[-100%]")
+    sidebar.classList.add("left-0")
+  }
+else{
+  hamburger.innerHTML=`<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>`
+  hamburger.classList.remove("opened");
+  hamburger.classList.add("closed");
+  sidebar.classList.remove("left-0")
+  sidebar.classList.add("left-[-100%]")
+}
+}
+hamburger.addEventListener("click", toggleSidebar)
 let NavBtns = document
   .getElementsByTagName("nav")[0]
   .getElementsByTagName("button");
@@ -150,6 +169,7 @@ let page;
 
 Array.from(NavBtns).forEach((btn) => {
   btn.addEventListener("click", () => {
+    toggleSidebar()
     let activeBtn = document.getElementsByClassName("active")[0];
     if (!btn.classList.contains("active")) {
       activeBtn && activeBtn.classList.remove("active");
@@ -251,11 +271,11 @@ let ExpensesActions = () => {
         .map((expense) => {
           return `<div class="card rounded-lg border bg-white shadow-sm px-5 py-8 m-auto my-5 space-y-4 mr-4">
                 <div class="heading">
-                  <span class="font-bold text-2xl">${expense.desc}</span>
+                  <span class="font-bold lg:text-2xl text-lg">${expense.desc}</span>
                 </div>
                 <div class="flex flex-row justify-between items-center w-full">
                   <p class="text-sm">${expense.date}</p>
-                  <p class="text-2xl font-semibold">₹${expense.amount}</p>
+                  <p class="lg:text-2xl text-lg font-semibold">₹${expense.amount}</p>
                 </div>
               </div>`;
         })
