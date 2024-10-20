@@ -120,6 +120,7 @@ const BudgetSettings = `
               <div class="space-y-3.5 flex flex-col">
                 <label for="description" class=" font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-lg">Current Budget : ${budget}</label>
                 <input
+                type="number"
                   id="budget-input"
                   class="flex h-10 w-full rounded-md border border-input px-3 py-2 text-sm ring-offset-black  placeholder:text-gray-500 "
                   placeholder="Enter new budget"
@@ -141,7 +142,7 @@ const Expenses = `<div
             </div>
           </div>`;
 
-// Navigaion
+// Navigaion`
 let hamburger = document.getElementsByClassName("outline-button-icon")[0];
 let sidebar= document.getElementsByTagName("aside")[0];
 let toggleSidebar = ()=>{
@@ -210,11 +211,16 @@ const BudgetSettingsActions = () => {
     "label"
   )[0].innerHTML = `Current Budget ${budget}`;
   document.getElementById("budget-btn").addEventListener("click", () => {
-    let budgetInput = document.getElementById("budget-input").value;
-    budget = parseInt(budgetInput);
+    let budgetInput = document.getElementById("budget-input");
+    if (budgetInput.value == ""){
+      alert("Please enter a valid budget");
+      return
+    }
+    budget = parseInt(budgetInput.value);
     document.getElementsByTagName(
       "label"
     )[0].innerHTML = `Current Budget ${budget}`;
+    budgetInput.value = "";
     localStorage.setItem("budget", JSON.stringify(budget));
   });
 };
